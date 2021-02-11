@@ -26,8 +26,6 @@
         (package-install package)))
       myPackages)
 
-(load-theme 'material t)
-
 ;; exec-path-from-shell
 (exec-path-from-shell-initialize)
 
@@ -36,4 +34,17 @@
 (load "keybind")
 (load "layout")
 (load "sidebar")
-(load "elpy")
+
+(load-theme 'material t)
+;; elpy
+(elpy-enable)
+(setq elpy-rpc-virtualenv-path 'current)
+
+;; Flycheck
+(when (require 'flycheck nil t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+;; autopep8
+(require 'py-autopep8)
+(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)

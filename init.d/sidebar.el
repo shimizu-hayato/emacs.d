@@ -11,7 +11,8 @@
   (bind-key "RET" 'neotree-enter-hide neotree-mode-map)
   (bind-key "a" 'neotree-hidden-file-toggle neotree-mode-map)
   (bind-key "<left>" 'neotree-select-up-node neotree-mode-map)
-  (bind-key "<right>" 'neotree-change-root neotree-mode-map))
+  (bind-key "<right>" 'neotree-change-root neotree-mode-map)
+  (setq neo-window-fixed-size nil))
 
 
 ;; Change neotree's font size
@@ -40,3 +41,5 @@ The description of FULL-PATH & ARG is in `neotree-enter'."
 The description of ARG is in `neo-buffer--execute'."
   (interactive "P")
   (neo-buffer--execute arg 'neo-open-file-hide 'neo-open-dir))
+
+
