@@ -14,11 +14,18 @@
     flycheck          ;; On the fly syntax checking
     py-autopep8       ;; Run autopep8 on save
     blacken           ;; Black formatting on save
+    jedi
+    company-jedi
     material-theme
     neotree
     use-package
     all-the-icons
     exec-path-from-shell
+    company
+    yasnippet
+    ivy
+    counsel
+    mozc
     )
   )
 (mapc #'(lambda (package)
@@ -34,17 +41,22 @@
 (load "keybind")
 (load "layout")
 (load "sidebar")
+(load "company_config")
+(load "elpy_config")
+(load "mozc_config")
+(load "yasnippet_config")
 
-(load-theme 'material t)
-;; elpy
-(elpy-enable)
-(setq elpy-rpc-virtualenv-path 'current)
 
-;; Flycheck
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-;; autopep8
-(require 'py-autopep8)
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(mozc counsel ivy use-package py-autopep8 neotree material-theme leaf flycheck exec-path-from-shell elpygen elpy dired-subtree blacken better-defaults all-the-icons)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

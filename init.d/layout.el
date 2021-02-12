@@ -1,6 +1,8 @@
 ; ----
 ; preferences
 ; ----
+
+(load-theme 'material t)
 ; 括弧を自動で補完する
 (electric-pair-mode 1)
 ;; tabにスペース４つを利用
