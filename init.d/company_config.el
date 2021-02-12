@@ -1,32 +1,49 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Companyの設定
-;; https://qiita.com/blue0513/items/c0dc35a880170997c3f5
-;;
-(require 'company)
-(global-company-mode) ; 全バッファで有効にする
-(setq company-transformers '(company-sort-by-backend-importance)) ;; ソート順
-(setq company-idle-delay 0) ; デフォルトは0.5
-(setq company-minimum-prefix-length 3) ; デフォルトは4
-(setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
-(setq completion-ignore-case t)
-(setq company-dabbrev-downcase nil)
-(global-set-key (kbd "C-M-i") 'company-complete)
-(define-key company-active-map (kbd "C-n") 'company-select-next) ;; C-n, C-pで補完候補を次/前の候補を選択
-(define-key company-active-map (kbd "C-p") 'company-select-previous)
-(define-key company-search-map (kbd "C-n") 'company-select-next)
-(define-key company-search-map (kbd "C-p") 'company-select-previous)
-(define-key company-active-map (kbd "C-s") 'company-filter-candidates) ;; C-sで絞り込む
-(define-key company-active-map (kbd "C-i") 'company-complete-selection) ;; TABで候補を設定
-(define-key company-active-map [tab] 'company-complete-selection) ;; TABで候補を設定
-(define-key company-active-map (kbd "C-f") 'company-complete-selection) ;; C-fで候補を設定
-(define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete) ;; 各種メジャーモードでも C-M-iで company-modeの補完を使う
-
-;; yasnippetとの連携
-(defvar company-mode/enable-yas t
-  "Enable yasnippet for all backends.")
-(defun company-mode/backend-with-yas (backend)
-  (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-      backend
-    (append (if (consp backend) backend (list backend))
-	    '(:with company-yasnippet))))
-(setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+(leaf company
+  :ensure t
+  :leaf-defer nil
+  :blackout company-mode
+  :bind ((company-active-map
+          ("M-n" . nil)
+          ("M-p" . nil)
+          ("C-s" . company-filter-candidates)
+          ("C-n" . company-select-next)
+          ("C-p" . company-select-previous)
+          ("C-i" . company-complete-selection))
+         (company-search-map
+          ("C-n" . company-select-next)
+          ("C-p" . company-select-previous)))
+  :custom ((company-tooltip-limit         . 12)
+           (company-idle-delay            . 0) ;; 補完の遅延なし
+           (company-minimum-prefix-length . 1) ;; 1文字から補完開始
+           (company-transformers          . '(company-sort-by-occurrence))
+           (global-company-mode           . t)
+           (company-selection-wrap-around . t))
+)
+(leaf yasnippet
+      :ensure t
+      :blackout yas-minor-mode
+      :custom ((yas-indent-line . 'fixed)
+               (yas-global-mode . t))
+      :bind ((yas-keymap
+              ("<tab>" . nil))            ; conflict with company
+             (yas-minor-mode-map
+              ("C-c y i" . yas-insert-snippet)
+              ("C-c y n" . yas-new-snippet)
+              ("C-c y v" . yas-visit-snippet-file)
+              ("C-c y l" . yas-describe-tables)
+              ("C-c y g" . yas-reload-all)))
+      :config
+      (leaf yasnippet-snippets :ensure t)
+      (defvar company-mode/enable-yas t
+        "Enable yasnippet for all backends.")
+      (defun company-mode/backend-with-yas (backend)
+        (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+            backend
+          (append (if (consp backend) backend (list backend))
+                  '(:with company-yasnippet))))
+      (defun set-yas-as-company-backend ()
+        (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+        )
+      :hook
+      ((company-mode-hook . set-yas-as-company-backend))
+)

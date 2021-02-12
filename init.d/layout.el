@@ -23,3 +23,5 @@
 (tool-bar-mode -1)
 ;; スクロールバーを非表示
 (set-scroll-bar-mode nil)
+;; (require 'cl) を見逃す
+(setq byte-compile-warnings '(not cl-functions obsolete))
