@@ -1,7 +1,10 @@
 ; ----
 ; preferences
 ; ----
-
+; バックアップファイルを作らない
+(setq auto-save-default nil)
+(setq create-lockfiles nil)
+; theme
 (load-theme 'material t)
 ; 括弧を自動で補完する
 (electric-pair-mode 1)
@@ -25,3 +28,6 @@
 (set-scroll-bar-mode nil)
 ;; (require 'cl) を見逃す
 (setq byte-compile-warnings '(not cl-functions obsolete))
+;; フォントと文字サイズの変更
+(add-to-list 'default-frame-alist
+                       '(font . "Cica-10"))

@@ -58,7 +58,7 @@
 (load "rainbow-delimiters_config")
 (load "py-isort_config")
 (load "white-space-mode_config")
-(load "poetry_config")
+;(load "poetry_config")
 (load "flycheck_config")
 
 
