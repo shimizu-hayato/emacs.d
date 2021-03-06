@@ -15,7 +15,9 @@
 ;; 列の番号
 (column-number-mode t)
 ;; 行番号の表示
-(global-linum-mode t)
+; (global-linum-mode t)
+(if (version<= "26.0.50" emacs-version)
+      (global-display-line-numbers-mode))
 ;; 1行ごとの改ページ
 (setq scroll-conservatively 1)
 ;; 対応する括弧を光らせる
