@@ -50,6 +50,7 @@
 (load "leaf_config")
 (load "keybind")
 (load "layout")
+(load "code_folding")
 (load "sidebar")
 (load "company_config")
 (load "elpy_config")
@@ -60,6 +61,8 @@
 (load "white-space-mode_config")
 ;(load "poetry_config")
 (load "flycheck_config")
+(load "vue_config")
+(load "js-mode_config")
 
 
 (custom-set-variables
@@ -79,7 +82,7 @@
  '(highlight-indent-guides-method 'character)
  '(highlight-indent-guides-responsive t)
  '(package-selected-packages
-   '(poetry yasnippet-snippets highlight-indent-guides mozc counsel ivy use-package py-autopep8 neotree material-theme leaf flycheck exec-path-from-shell elpygen elpy dired-subtree blacken better-defaults all-the-icons))
+   '(markdown-mode scss-mode slim-mode web-mode pug-mode tern-auto-complete js2-mode tern js-auto-format-mode vue-mode poetry yasnippet-snippets highlight-indent-guides mozc counsel ivy use-package py-autopep8 neotree material-theme leaf flycheck exec-path-from-shell elpygen elpy dired-subtree blacken better-defaults all-the-icons))
  '(whitespace-display-mappings '((space-mark 12288 [9633]) (tab-mark 9 [187 9] [92 9])))
  '(whitespace-global-modes
    '(emacs-lisp-mode shell-script-mode sh-mode python-mode org-mode))

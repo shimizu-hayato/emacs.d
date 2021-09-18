@@ -1,6 +1,5 @@
-*~
-#*#
-auto-save-list/
-elpa/
-kkcrc
-snippets/
+*
+!init.el
+!/init.d
+!/init.d/*
+!.bash_profile
